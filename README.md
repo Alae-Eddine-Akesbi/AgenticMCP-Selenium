@@ -74,6 +74,24 @@ streamlit run app.py
 
 This will launch a web-based chat interface where you can interact with the agent.
 
+## 🐳 Docker Usage
+
+This project is also available as a Docker image, which simplifies the setup process by bundling the `langchain-agent` and `mcp-selenium` server into a single container.
+
+**Building the Docker Image:**
+
+```bash
+docker build -t mcp-selenium-agent .
+```
+
+**Running the Docker Container:**
+
+```bash
+docker run -p 3000:3000 -p 8501:8501 mcp-selenium-agent
+```
+
+This will start both the `mcp-selenium` server on port `3000` and the `langchain-agent` on port `8501`. You can access the agent's web interface by navigating to `http://localhost:8501` in your browser.
+
 ## 🔗 n8n Integration
 
 This project is designed to be used with n8n, a powerful workflow automation tool. We've provided a pre-built workflow (`selenium_workflow.json`) to get you started quickly.
