@@ -1,0 +1,129 @@
+{
+    "nodes": [
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.3,
+        "position": [
+          0,
+          0
+        ],
+        "id": "352d3e77-a886-460a-92dd-9f8517119ae3",
+        "name": "When chat message received",
+        "webhookId": "92bda5c0-f3e8-4180-9809-617ae494623a"
+      },
+      {
+        "parameters": {
+          "options": {
+            "systemMessage": "=Vous êtes un agent expert en automatisation web. Votre mission est d'exécuter les tâches de l'utilisateur en contrôlant un navigateur.\n\n__Règle d'Or (la plus importante) :__ Pour trouver un élément ou comprendre la structure d'une page, votre premier réflexe est __toujours__ d'utiliser l'outil `get_page_source`. Ne tentez pas de deviner. Le code HTML est votre plan ; utilisez-le pour trouver les sélecteurs les plus fiables.\n\n__Votre processus de travail :__\n\n1. __Planifier :__ Décomposez la demande en petites étapes logiques.\n\n2. __Exécuter :__ Effectuez une action (cliquer, écrire, etc.).\n\n3. __Analyser et corriger :__\n\n   - Si une action échoue ou si vous devez trouver un élément, utilisez `get_page_source` pour obtenir le code HTML.\n   - Examinez le HTML pour trouver le sélecteur correct (ID, `name`, classe, etc.).\n   - Réessayez l'action avec le bon sélecteur.",
+            "maxIterations": 25
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 2.2,
+        "position": [
+          280,
+          0
+        ],
+        "id": "56bbd3fb-5cfc-47ba-8a85-693242de44e9",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {},
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          352,
+          224
+        ],
+        "id": "688b70cc-1e01-4ace-b31a-b4f91174f31b",
+        "name": "Simple Memory"
+      },
+      {
+        "parameters": {
+          "endpointUrl": "http://127.0.0.1:3000",
+          "serverTransport": "httpStreamable"
+        },
+        "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+        "typeVersion": 1.1,
+        "position": [
+          480,
+          224
+        ],
+        "id": "1a5500ae-e193-461d-aca3-5598d8fa3fce",
+        "name": "MCP Client"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+        "typeVersion": 1,
+        "position": [
+          224,
+          224
+        ],
+        "id": "a55246d8-a198-4cca-b976-9c5e470b8854",
+        "name": "Google Gemini Chat Model",
+        "credentials": {
+          "googlePalmApi": {
+            "id": "xZQlKykUb1pWAvBO",
+            "name": "Google Gemini(PaLM) Api account for MCP"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "MCP Client": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Gemini Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {},
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "8fd464218823f385c55eac4f1d026e52f45ccd1903387d53ff8eeba18ab27c0d"
+    }
+  }

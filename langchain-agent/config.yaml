@@ -1,0 +1,4 @@
+model:
+  name: "gemini-2.5-flash"
+mcp_server:
+  url: "http://localhost:3000"
