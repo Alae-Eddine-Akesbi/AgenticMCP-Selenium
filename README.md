@@ -135,3 +135,7 @@ The `mcp-selenium` server provides a comprehensive set of tools for browser auto
 *   **`double_click`**: Performs a double-click on an element.
 *   **`right_click`**: Performs a right-click on an element.
 *   **`press_key`**: Simulates pressing a key on the keyboard.
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
