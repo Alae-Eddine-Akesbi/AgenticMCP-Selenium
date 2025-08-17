@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+
+# Node
+mcp-selenium/node_modules
+npm-debug.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Other
+.DS_Store
+selenium_workflow.json

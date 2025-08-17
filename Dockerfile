@@ -1,26 +1,47 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Stage 1: Build the Node.js application
+FROM node:18-slim AS builder
 
-# Install Node.js
-RUN apt-get update && apt-get install -y nodejs npm
+WORKDIR /usr/src/app/mcp-selenium
 
-# Set the working directory in the container
+# Copy package files and install dependencies
+COPY mcp-selenium/package*.json ./
+RUN npm install
+
+# Copy the rest of the mcp-selenium source code
+COPY mcp-selenium/ ./
+
+# Stage 2: Create the final, optimized image
+# Use the full Debian Bullseye image to ensure all system libraries are available
+FROM python:3.9-bullseye
+
+# Install a modern version of Node.js (v18), Firefox, its dependencies, Xvfb, and xauth
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    curl \
+    firefox-esr \
+    xvfb \
+    xauth \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+# Copy the pre-built Node.js app from the builder stage
+COPY --from=builder /usr/src/app/mcp-selenium ./mcp-selenium
+
+# Copy the langchain-agent source code
+COPY langchain-agent/ ./langchain-agent
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r langchain-agent/requirements.txt
 
-# Install Node.js dependencies
-RUN cd mcp-selenium && npm install
-
-# Make the startup script executable
+# Copy the startup script and make it executable
+COPY start.sh .
 RUN chmod +x start.sh
 
-# Expose ports
+# Expose the required ports
 EXPOSE 3000 8501
 
-# Run the startup script
+# Set the command to run the application
 CMD ["./start.sh"]
