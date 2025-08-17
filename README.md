@@ -1,6 +1,8 @@
 # 🤖 AI-Powered Browser Automation with LangChain and Selenium MCP
 
-This project provides a powerful and flexible solution for automating web browsers using natural language commands. It combines a **LangChain agent** with a **Selenium-based MCP server** to create a system that can perform complex web automation tasks based on simple, conversational instructions. The project is designed for seamless integration with **n8n**, allowing you to build sophisticated automation workflows with ease.
+## 📖 About
+
+This project provides a powerful and flexible solution for automating web browsers using natural language commands. It combines a **LangChain agent** with a **Selenium-based MCP server** to create a system that can perform complex web automation tasks based on simple, conversational instructions. The project is designed for seamless integration with **n8n**, allowing you to build sophisticated automation workflows with ease. It's an ideal starting point for developers looking to leverage AI for web scraping, automated testing, and other browser-based tasks.
 
 ## ✨ Key Features
 
